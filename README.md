@@ -1,0 +1,2 @@
+# Brainrots
+a brainrots tracker
