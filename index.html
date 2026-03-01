@@ -4,10 +4,95 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Brainrots</title>
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body{ margin:0; background:#000; color:#fff; font-family:Arial,system-ui; }
+    .wrap{ max-width:760px; margin:0 auto; padding:22px; }
+    h1{ text-align:center; font-size:52px; margin:10px 0 18px; }
+    input{
+      width:100%; padding:12px 14px; font-size:18px;
+      border-radius:14px; border:2px solid #fff; background:#111; color:#fff;
+      outline:none;
+    }
+    .hint{ color:#bbb; margin:10px 0 14px; text-align:center; font-weight:700; }
+    .item{
+      border:2px solid #fff; border-radius:16px;
+      padding:12px 14px; margin:10px 0; font-weight:900;
+      cursor:pointer; background:#0b0b0b;
+    }
+    .item:active{ transform: scale(0.99); }
+    .pill{
+      display:inline-block; padding:8px 12px; border-radius:999px;
+      background:#fff; color:#000; font-weight:900; margin: 8px auto 0;
+    }
+    .topbar{ display:flex; justify-content:center; }
+  </style>
 </head>
 <body>
-  <div id="app"></div>
-  <script src="app.js"></script>
+  <div class="wrap">
+    <div class="topbar"><div class="pill" id="status">Loading…</div></div>
+    <h1>Brainrots</h1>
+    <input id="search" placeholder="Type to search brainrots…" />
+    <div class="hint" id="hint"></div>
+    <div id="list"></div>
+  </div>
+
+  <script>
+    // ✅ If you see this alert, JS is running.
+    // If you do NOT see it, GitHub Pages is serving an old file or your page isn’t updating.
+    alert("Brainrots loaded ✅");
+
+    // PASTE YOUR FULL LIST INSIDE THE BACKTICKS (one per line)
+    const BRAINROT_MASTER_RAW = `
+Skibidi Toilet
+Strawberry Elephant
+Meowl
+Headless Horseman
+La Vacca Saturno Saturnita
+Los Tralaleritos
+Las Tralaleritas
+Nuclearo Dinossauro
+Svinina Bombardino
+Furiflura
+Tim Cheese
+Lirili Larila
+Noobini Pizzanini
+`;
+
+    // Auto-clean: removes quotes/commas, ignores empty lines, removes duplicates
+    const BRAINROT_MASTER = Array.from(new Set(
+      BRAINROT_MASTER_RAW
+        .split(/\r?\n/)
+        .map(s => s.trim())
+        .filter(Boolean)
+        .map(s => s.replace(/,$/, ""))       // remove trailing commas
+        .map(s => s.replace(/^"+|"+$/g, "")) // remove surrounding quotes
+        .filter(s => !/^here is/i.test(s))   // ignore accidental sentences
+    ));
+
+    const listEl = document.getElementById("list");
+    const searchEl = document.getElementById("search");
+    const hintEl = document.getElementById("hint");
+    const statusEl = document.getElementById("status");
+
+    function render(filter=""){
+      listEl.innerHTML = "";
+      const f = filter.toLowerCase();
+      const results = BRAINROT_MASTER.filter(n => n.toLowerCase().includes(f));
+
+      hintEl.textContent = `Showing ${Math.min(results.length, 200)} of ${results.length} matches • Total brainrots: ${BRAINROT_MASTER.length}`;
+      statusEl.textContent = `Total: ${BRAINROT_MASTER.length}`;
+
+      results.slice(0, 200).forEach(name => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.textContent = name;
+        div.onclick = () => alert("Clicked: " + name);
+        listEl.appendChild(div);
+      });
+    }
+
+    searchEl.addEventListener("input", () => render(searchEl.value));
+    render("");
+  </script>
 </body>
 </html>
