@@ -20,379 +20,205 @@ const PAGES = {
 
 /** Put your brainrot names here (you can keep adding later).
     The app will let you type custom too. */
-const BRAINROT_MASTER = [
-  "Skibidi Toilet",
-  "Strawberry Elephant",
-  "Meowl",
-  "Headless Horseman",
-  "La Vacca Saturno Saturnita",
-  "Los Tralaleritos",
-  "Las Tralaleritas",
-  "Job Job Job Sahur",
-  "GOAT",
-  "Graipuss Medussi",
-  "To to to Sahur",
-  "Chicleteira Bicicleteira",
-  "Chicleteirina Bicicleteirina",
-  "La Grande Combinasion",
-  "Nuclearo Dinossauro",
-  "Money Money Puggy",
-  "Tang Tang Keletang",
-  "Ketupat Kepat",
-  "Tictac Sahur",
-  "Ketchuru and Musturu",
-  "Lavadorito Spinito",
-  "Garama and Madundung",
-  "Ventoliero Pavonero",
-  "Burguro and Fryuro",
-  "Capitano Moby",
-  "Cerberus",
-  "Dragon Cannelloni",
-  "Karkerkar Kurkur",
-  "Los Matteos",
-  "Bisonte Giuppitere",
-  "Trenostruzzo Turbo 4000",
-  "Jackorilla",
-  "Sammyni Spyderini",
-  "Torrtuginni Dragonfrutini",
-  "Dul Dul Dul",
-  "Chachechi",
-  "Blackhole Goat",
-  "Agarrini la Palini",
-  "Los Spyderinis",
-  "Fragola La La La",
-  "Extinct Tralalero",
-  "La Cucaracha",
-  "Vulturino Skeletono",
-  "Zombie Tralala",
-  "Los Tortus",
-  "Boatito Auratito",
-  "Guerriro Digitale",
-  "Yess my examine",
-  "La Karkerkar Combinasion",
-  "La Vacca Prese Presente",
-  "Reindeer Tralala",
-  "Extinct Matteo",
-  "Rocco Disco",
-  "Pumpkini Spyderini",
-  "Frankentteo",
-  "Los Trios",
-  "Karker Sahur",
-  "Las Vaquitas Saturnitas",
-  "Los Karkeritos",
-  "Santteo",
-  "Fishboard",
-  "La Vacca Jacko Linterino",
-  "Triplito Tralaleritos",
-  "Trickolino",
-  "Giftini Spyderini",
-  "Perrito Burrito",
-  "1x1x1x1",
-  "Love Love Love Sahur",
-  "Los Cucarachas",
-  "Please my Present",
-  "Cuadramat and Pakrahmatmamat",
-  "Bunnyman",
-  "Coffin Tung Tung Tung Sahur",
-  "Tung Tung Tung Sahur",
-  "Los Jobcitos",
-  "Nooo My Hotspot",
-  "Noo my examine",
-  "Telemorte",
-  "La Sahur Combinasion",
-  "List List List Sahur",
-  "Pirulitoita Bicicleteira",
-  "Pot Hotspot",
-  "25",
-  "Santa Hotspot",
-  "Horegini Boom",
-  "Quesadilla Crocodila",
-  "Bunito Bunito Spinito",
-  "Pot Pumpkin",
-  "Cupid Cupid Sahur",
-  "Naughty Naughty",
-  "Ho Ho Ho Sahur",
-  "Mi Gatito",
-  "Quesadillo Vampiro",
-  "Brunito Marsito",
-  "Cupid Hotspot",
-  "Burrito Bandito",
-  "Chill Puppy",
-  "Los Quesadillas",
-  "Noo my Candy",
-  "Arcadopus",
-  "Los Nooo My Hotspotsitos",
-  "Rang Ring Bus",
-  "Noo my Present",
-  "Guest 666",
-  "Los Chicleteiras",
-  "Los Mi Gatitos",
-  "67",
-  "Donkeyturbo Express",
-  "Los Burritos",
-  "Los 25",
-  "Mariachi Corazoni",
-  "Swag Soda",
-  "Noo my Heart",
-  "Chimnino",
-  "Los Combinasionas",
-  "Chicleteira Noelteira",
-  "Fishino Clownino",
-  "Tacorita Bicicleta",
-  "Los Sweethearts",
-  "Spinny Hammy",
-  "Las Sis",
-  "DJ Panda",
-  "Chicleteira Cupideira",
-  "Los Planitos",
-  "Los Hotspotsitos",
-  "Los Spooky Combinasionas",
-  "Los Jolly Combinasionas",
-  "Los Mobilis",
-  "Celularcini Viciosini",
-  "Los 67",
-  "Los Candies",
-  "La Extinct Grande",
-  "Los Bros",
-  "Bacuru and Egguru",
-  "La Spooky Grande",
-  "Chipso and Queso",
-  "Chillin Chili",
-  "Money Money Reindeer",
-  "Mieteteira Bicicleteira",
-  "Tuff Toucan",
-  "Tralaledon",
-  "Gobblino Uniciclino",
-  "Esok Sekolah",
-  "Los Puggies",
-  "W or L",
-  "La Jolly Grande",
-  "Los Primos",
-  "Eviledon",
-  "Los Tacoritas",
-  "Lovin Rose",
-  "La Taco Combinasion",
-  "Orcaledon",
-  "Swaggy Bros",
-  "La Romantic Grande",
-  "Tirilikalika Tirilikalako",
-  "Jolly Jolly Sahur",
-  "Rosetti Tualetti",
-  "Spaghetti Tualetti",
-  "Festive 67",
-  "Los Spaghettis",
-  "Sammyni Fattini",
-  "Ginger Gerat",
-  "La Ginger Sekolah",
-  "Love Love Bear",
-  "Spooky and Pumpky",
-  "La Food Combinasion",
-  "Fragrama and Chocrama",
-  "Signore Carapace",
-  "La Casa Boo",
-  "Los Sekolahs",
-  "La Secret Combinasion",
-  "Los Amigos",
-  "Reinito Sleighito",
-  "Ketupat Bros",
-  "Cooki and Milki",
-  "Rosey and Teddy",
-  "Popcuru and Fizzuru",
-  "Celestial Pegasus",
-  "La Supreme Combinasion",
-  "Dragon Gingerini",
-  "Hydra Dragon Cannelloni",
-  "Cocofanto Elefanto",
-  "Girafa Celestre",
-  "Tralalero Tralala",
-  "Odin Din Din Dun",
-  "Tralalita Tralala",
-  "Trenostruzzo Turbo 3000",
-  "Trippi Troppi Troppa Trippa",
-  "Ballerino Lololo",
-  "Pakrahmatmamat",
-  "Piccione Macchina",
-  "Tractoro Dinosauro",
-  "Cacasito Satalito",
-  "Aquanaut",
-  "Tartaruga Cisterna",
-  "Gattatino Nyanino",
-  "Chihuanini Taconini",
-  "Matteo",
-  "Los Crocodillitos",
-  "Tigroligre Frutonni",
-  "Money Money Man",
-  "Alessio",
-  "Tipi Topi Taco",
-  "Unclito Samito",
-  "Tukanno Bananno",
-  "Extinct Ballerina",
-  "Vampira Cappuccina",
-  "Espresso Signora",
-  "Orcalero Orcala",
-  "Jacko Jack Jack",
-  "Urubini Flamenguini",
-  "Capi Taco",
-  "Los Chihuaninis",
-  "Gattito Tacoto",
-  "Las Capuchinas",
-  "Bulbito Bandito Traktorito",
-  "Los Tungtungtungcitos",
-  "Ballerina Peppermintina",
-  "Brr es Teh Patipum",
-  "Pakrahmatmatina",
-  "Los Bombinitos",
-  "Los Orcalitos",
-  "Orcalita Orcala",
-  "Corn Corn Corn Sahur",
-  "Mummy Ambalabu",
-  "Snailenzo",
-  "Squalanana",
-  "Dug dug dug",
-  "Ginger Globo",
-  "Yeti Claus",
-  "Crabbo Limonetta",
-  "Granchiello Spiritell",
-  "Tootini Shrimpini",
-  "Los Tipi Tacos",
-  "Frio Ninja",
-  "Buho de Noelo",
-  "Piccionetta Machina",
-  "Boba Panda",
-  "Mastodontico Telepiedone",
-  "Los Gattitos",
-  "Bambu Bambu Sahur",
-  "Chrismasmamat",
-  "Anpali Babel",
-  "Luv Luv Luv",
-  "Cappuccino Clownino",
-  "Bombardini Tortinii",
-  "Brasilini Berimbini",
-  "Belula Beluga",
-  "Krupuk Pagi Pagi",
-  "Skull Skull Skull",
-  "Cocoa Assassino",
-  "Tentacolo Tecnico",
-  "Ginger Cisterna",
-  "Pandanini Frostini",
-  "Dolphini Jetskini",
-  "Pop Pop Sahur",
-  "Noo La Polizia",
-  "Karkerheart Luvkur",
-  "Frigo Camelo",
-  "Orangutini Ananassini",
-  "Rhino Toasterino",
-  "Bombardiro Crocodilo",
-  "Bombombini Gusini",
-  "Cavallo Virtuoso",
-  "Gorillo Watermelondrillo",
-  "Lerulerulerule",
-  "Te Te Te Sahur",
-  "Tracoducotulu Delapeladustuz",
-  "Cachorrito Melonito",
-  "Toiletto Focaccino",
-  "Brutto Gialutto",
-  "Spioniro Golubiro",
-  "Zibra Zubra Zibralini",
-  "Tigrilini Watermelini",
-  "Avocadorilla",
-  "Gorillo Subwoofero",
-  "Stoppo Luminino",
-  "Tob Tobi Tobi",
-  "Ganganzelli Trulala",
-  "Rhino Helicopterino",
-  "Magi Ribbitini",
-  "Jingle Jingle Sahur",
-  "Los Noobinis",
-  "Spongini Quackini",
-  "Carloo",
-  "Carrotini Brainini",
-  "Centrucci Nuclucci",
-  "Jacko Spaventosa",
-  "Bananito Bandito",
-  "Tree Tree Tree Sahur",
-  "Chimpanzini Bananini",
-  "Ballerina Cappuccina",
-  "Chef Crabracadabra",
-  "Lionel Cactuseli",
-  "Glorbo Fruttodrillo",
-  "Quivioli Ameleonni",
-  "Blueberrinni Octopusini",
-  "Pipi Potato",
-  "Strawberrelli Flamingelli",
-  "Pandaccini Bananini",
-  "Sigma Boy",
-  "Clickerino Crabo",
-  "Caramello Filtrello",
-  "Cocosini Mama",
-  "Quackula",
-  "Pi Pi Watermelon",
-  "Chocco Bunny",
-  "Puffaball",
-  "Sigma Girl",
-  "Sealo Regalo",
-  "Buho de Fuego",
-  "Cappuccino Assassino",
-  "Brr Brr Patapim",
-  "Avocadini Antilopini",
-  "Trulimero Trulicina",
-  "Bambini Crostini",
-  "Bananita Dolphinita",
-  "Perochello Lemonchello",
-  "Brri Brri Bicus Dicus Bombicus",
-  "Avocadini Guffo",
-  "Salamino Penguino",
-  "Wombo Rollo",
-  "Bandito Axolito",
-  "Malame Amarele",
-  "Ti Ti Ti Sahur",
-  "Mangolini Parrocini",
-  "Frogato Pirato",
-  "Doi Doi Do",
-  "Penguin Tree",
-  "Penguino Cocosino",
-  "Mummio Rappitto",
-  "Trippi Troppi",
-  "Gangster Footera",
-  "Bandito Bobritto",
-  "Boneca Ambalabu",
-  "Cacto Hipopotamo",
-  "Ta Ta Ta Ta Sahur",
-  "Tric Trac Baraboom",
-  "Cupcake Koala",
-  "Frogo Elfo",
-  "Pipi Avocado",
-  "Pinealotto Fruttarino",
-  "Pipi Corni",
-  "Tartaragno",
-  "Racconi Jandelini",
-  "Noobini Santanini",
-  "Pipi Kiwi",
-  "Svinina Bombardino",
-  "Furiflura",
-  "Tim Cheese",
-  "Lirili Larila",
-  "Noobini Pizzanini"
-];
+const BRAINROT_MASTER_RAW = `
+Skibidi Toilet
+Strawberry Elephant
+Meowl
+Headless Horseman
+La Vacca Saturno Saturnita
+Los Tralaleritos
+Las Tralaleritas
+Job Job Job Sahur
+GOAT
+Graipuss Medussi
+To to to Sahur
+Chicleteira Bicicleteira
+Chicleteirina Bicicleteirina
+La Grande Combinasion
+Nuclearo Dinossauro
+Money Money Puggy
+Tang Tang Keletang
+Ketupat Kepat
+Tictac Sahur
+Ketchuru and Musturu
+Lavadorito Spinito
+Garama and Madundung
+Ventoliero Pavonero
+Burguro and Fryuro
+Capitano Moby
+Cerberus
+Dragon Cannelloni
+Karkerkar Kurkur
+Los Matteos
+Bisonte Giuppitere
+Trenostruzzo Turbo 4000
+Jackorilla
+Sammyni Spyderini
+Torrtuginni Dragonfrutini
+Dul Dul Dul
+Chachechi
+Blackhole Goat
+Agarrini la Palini
+Los Spyderinis
+Fragola La La La
+Extinct Tralalero
+La Cucaracha
+Vulturino Skeletono
+Zombie Tralala
+Los Tortus
+Boatito Auratito
+Guerriro Digitale
+Yess my examine
+La Karkerkar Combinasion
+La Vacca Prese Presente
+Reindeer Tralala
+Extinct Matteo
+Rocco Disco
+Pumpkini Spyderini
+Frankentteo
+Los Trios
+Karker Sahur
+Las Vaquitas Saturnitas
+Los Karkeritos
+Santteo
+Fishboard
+La Vacca Jacko Linterino
+Triplito Tralaleritos
+Trickolino
+Giftini Spyderini
+Perrito Burrito
+1x1x1x1
+Love Love Love Sahur
+Los Cucarachas
+Please my Present
+Cuadramat and Pakrahmatmamat
+Bunnyman
+Coffin Tung Tung Tung Sahur
+Tung Tung Tung Sahur
+Los Jobcitos
+Nooo My Hotspot
+Noo my examine
+Telemorte
+La Sahur Combinasion
+List List List Sahur
+Pirulitoita Bicicleteira
+Pot Hotspot
+25
+Santa Hotspot
+Horegini Boom
+Quesadilla Crocodila
+Bunito Bunito Spinito
+Pot Pumpkin
+Cupid Cupid Sahur
+Naughty Naughty
+Ho Ho Ho Sahur
+Mi Gatito
+Quesadillo Vampiro
+Brunito Marsito
+Cupid Hotspot
+Burrito Bandito
+Chill Puppy
+Los Quesadillas
+Noo my Candy
+Arcadopus
+Los Nooo My Hotspotsitos
+Rang Ring Bus
+Noo my Present
+Guest 666
+Los Chicleteiras
+Los Mi Gatitos
+67
+Donkeyturbo Express
+Los Burritos
+Los 25
+Mariachi Corazoni
+Swag Soda
+Noo my Heart
+Chimnino
+Los Combinasionas
+Chicleteira Noelteira
+Fishino Clownino
+Tacorita Bicicleta
+Los Sweethearts
+Spinny Hammy
+Las Sis
+DJ Panda
+Chicleteira Cupideira
+Los Planitos
+Los Hotspotsitos
+Los Spooky Combinasionas
+Los Jolly Combinasionas
+Los Mobilis
+Celularcini Viciosini
+Los 67
+Los Candies
+La Extinct Grande
+Los Bros
+Bacuru and Egguru
+La Spooky Grande
+Chipso and Queso
+Chillin Chili
+Money Money Reindeer
+Mieteteira Bicicleteira
+Tuff Toucan
+Tralaledon
+Gobblino Uniciclino
+Esok Sekolah
+Los Puggies
+W or L
+La Jolly Grande
+Los Primos
+Eviledon
+Los Tacoritas
+Lovin Rose
+La Taco Combinasion
+Orcaledon
+Swaggy Bros
+La Romantic Grande
+Tirilikalika Tirilikalako
+Jolly Jolly Sahur
+Rosetti Tualetti
+Spaghetti Tualetti
+Festive 67
+Los Spaghettis
+Sammyni Fattini
+Ginger Gerat
+La Ginger Sekolah
+Love Love Bear
+Spooky and Pumpky
+La Food Combinasion
+Fragrama and Chocrama
+Signore Carapace
+La Casa Boo
+Los Sekolahs
+La Secret Combinasion
+Los Amigos
+Reinito Sleighito
+Ketupat Bros
+Cooki and Milki
+Rosey and Teddy
+Popcuru and Fizzuru
+Celestial Pegasus
+La Supreme Combinasion
+Dragon Gingerini
+Hydra Dragon Cannelloni
+Svinina Bombardino
+Furiflura
+Tim Cheese
+Lirili Larila
+Noobini Pizzanini
+`;
 
-function seed(){
-  return {
-    activeProfileId: "rafael",
-    profiles: [
-      {
-        id: "rafael",
-        name: "RafaelSales",
-        email: "@rsaldana@crossdock.mx",
-        rating: 5,
-        shops: [
-          { name: "BuyBlox", url: "#" },
-          { name: "Eldorado", url: "#" },
-          { name: "Ebay", url: "#" },
-        ],
-        topProductIds: [],
-        reviews: [],
-      }
-    ],
+const BRAINROT_MASTER = Array.from(
+  new Set(
+    BRAINROT_MASTER_RAW
+      .split(/\r?\n/)
+      .map(s => s.trim())
+      .filter(Boolean)
+      .map(s => s.replace(/,$/, ""))       // remove trailing commas
+      .map(s => s.replace(/^"+|"+$/g, "")) // remove quotes if any
+  )
+);
     brainrots: [
       // Your required Need item:
       {
