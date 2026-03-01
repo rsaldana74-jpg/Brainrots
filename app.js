@@ -1,15 +1,14 @@
 /* Brainrots app (GitHub Pages friendly)
    - localStorage persistence
-   - simple page router with back stack
-   - matches your rules:
-     * Need brainrots show "Gotten" only (no sold/stolen)
-     * Nuclearo Dinossauro is preloaded in Need
-     * Sold column empty state shows "None..." + sad face
-     * Stolen forces amount = 0
+   - page router with back stack
+   - You can choose brainrot anytime (dropdown + custom)
+   - Need brainrots: ONLY "Gotten" (no sold/stolen)
+   - Sold empty state: None... + sad face
+   - Stolen forces amount = 0
 */
 
 const APP = document.getElementById("app");
-const LS_KEY = "brainrots_app_v1";
+const LS_KEY = "brainrots_app_v2";
 
 const PAGES = {
   HOME: "home",
@@ -19,246 +18,412 @@ const PAGES = {
   DETAIL: "detail",
 };
 
-const seed = () => ({
-  activeProfileId: "rafael",
-  profiles: [
-    {
-      id: "rafael",
-      name: "RafaelSales",
-      email: "@rsaldana@crossdock.mx",
-      rating: 5,
-      shops: [
-        { name: "BuyBlox", url: "#" },
-        { name: "Eldorado", url: "#" },
-        { name: "Ebay", url: "#" },
-      ],
-      topProductIds: [],   // list of brainrot ids linked as top products
-      reviews: [],
-    }
-  ],
-brainrots: [
-  ...[
-"La Vacca Saturno Saturnita",
-"Los Tralaleritos",
-"Las Tralaleritas",
-"Job Job Job Sahur",
-"GOAT",
-"Graipuss Medussi",
-"To to to Sahur",
-"Chicleteira Bicicleteira",
-"Chicleteirina Bicicleteirina",
-"La Grande Combinasion",
-"Nuclearo Dinossauro",
-"Money Money Puggy",
-"Tang Tang Keletang",
-"Ketupat Kepat",
-"Tictac Sahur",
-"Ketchuru and Musturu",
-"Lavadorito Spinito",
-"Garama and Madundung",
-"Ventoliero Pavonero",
-"Burguro and Fryuro",
-"Capitano Moby",
-"Cerberus",
-"Dragon Cannelloni",
-"Karkerkar Kurkur",
-"Los Matteos",
-"Bisonte Giuppitere",
-"Trenostruzzo Turbo 4000",
-"Jackorilla",
-"Sammyni Spyderini",
-"Torrtuginni Dragonfrutini",
-"Dul Dul Dul",
-"Chachechi",
-"Blackhole Goat",
-"Agarrini la Palini",
-"Los Spyderinis",
-"Fragola La La La",
-"Extinct Tralalero",
-"La Cucaracha",
-"Vulturino Skeletono",
-"Zombie Tralala",
-"Los Tortus",
-"Boatito Auratito",
-"Guerriro Digitale",
-"Yess my examine",
-"La Karkerkar Combinasion",
-"La Vacca Prese Presente",
-"Reindeer Tralala",
-"Extinct Matteo",
-"Rocco Disco",
-"Pumpkini Spyderini",
-"Frankentteo",
-"Los Trios",
-"Karker Sahur",
-"Las Vaquitas Saturnitas",
-"Los Karkeritos",
-"Santteo",
-"Fishboard",
-"La Vacca Jacko Linterino",
-"Triplito Tralaleritos",
-"Trickolino",
-"Giftini Spyderini",
-"Perrito Burrito",
-"1x1x1x1",
-"Love Love Love Sahur",
-"Los Cucarachas",
-"Please my Present",
-"Cuadramat and Pakrahmatmamat",
-"Bunnyman",
-"Coffin Tung Tung Tung Sahur",
-"Tung Tung Tung Sahur",
-"Los Jobcitos",
-"Nooo My Hotspot",
-"Noo my examine",
-"Telemorte",
-"La Sahur Combinasion",
-"List List List Sahur",
-"Pirulitoita Bicicleteira",
-"Pot Hotspot",
-"25",
-"Santa Hotspot",
-"Horegini Boom",
-"Quesadilla Crocodila",
-"Bunito Bunito Spinito",
-"Pot Pumpkin",
-"Cupid Cupid Sahur",
-"Naughty Naughty",
-"Ho Ho Ho Sahur",
-"Mi Gatito",
-"Quesadillo Vampiro",
-"Brunito Marsito",
-"Cupid Hotspot",
-"Burrito Bandito",
-"Chill Puppy",
-"Los Quesadillas",
-"Noo my Candy",
-"Arcadopus",
-"Los Nooo My Hotspotsitos",
-"Rang Ring Bus",
-"Noo my Present",
-"Guest 666",
-"Los Chicleteiras",
-"Los Mi Gatitos",
-"67",
-"Donkeyturbo Express",
-"Los Burritos",
-"Los 25",
-"Mariachi Corazoni",
-"Swag Soda",
-"Noo my Heart",
-"Chimnino",
-"Los Combinasionas",
-"Chicleteira Noelteira",
-"Fishino Clownino",
-"Tacorita Bicicleta",
-"Los Sweethearts",
-"Spinny Hammy",
-"Las Sis",
-"DJ Panda",
-"Chicleteira Cupideira",
-"Los Planitos",
-"Los Hotspotsitos",
-"Los Spooky Combinasionas",
-"Los Jolly Combinasionas",
-"Los Mobilis",
-"Celularcini Viciosini",
-"Los 67",
-"Los Candies",
-"La Extinct Grande",
-"Los Bros",
-"Bacuru and Egguru",
-"La Spooky Grande",
-"Chipso and Queso",
-"Chillin Chili",
-"Money Money Reindeer",
-"Mieteteira Bicicleteira",
-"Tuff Toucan",
-"Tralaledon",
-"Gobblino Uniciclino",
-"Esok Sekolah",
-"Los Puggies",
-"W or L",
-"La Jolly Grande",
-"Los Primos",
-"Eviledon",
-"Los Tacoritas",
-"Lovin Rose",
-"La Taco Combinasion",
-"Orcaledon",
-"Swaggy Bros",
-"La Romantic Grande",
-"Tirilikalika Tirilikalako",
-"Jolly Jolly Sahur",
-"Rosetti Tualetti",
-"Spaghetti Tualetti",
-"Festive 67",
-"Los Spaghettis",
-"Sammyni Fattini",
-"Ginger Gerat",
-"La Ginger Sekolah",
-"Love Love Bear",
-"Spooky and Pumpky",
-"La Food Combinasion",
-"Fragrama and Chocrama",
-"Signore Carapace",
-"La Casa Boo",
-"Los Sekolahs",
-"La Secret Combinasion",
-"Los Amigos",
-"Reinito Sleighito",
-"Ketupat Bros",
-"Cooki and Milki",
-"Rosey and Teddy",
-"Popcuru and Fizzuru",
-"Celestial Pegasus",
-"La Supreme Combinasion",
-"Dragon Gingerini",
-"Hydra Dragon Cannelloni"
-].map((name, i) => ({
-  id: "b_" + i,
-  name,
-  baseRate: 150000000, // default for now
-  mutation: "Rainbow",
-  trait: "Doesn't matter",
-  amount: 0,
-  isNeed: true,
-  flags: { sold:false, stolen:false },
-  imageDataUrl: null,
-  price: null,
-  moneyGroup: null
-}))
-],
-      baseRate: 150_000_000, // $150M/s
-      mutation: "Rainbow",
-      trait: "Doesn't matter",
-      amount: 0,             // amount doesn't matter for Need; kept for compatibility
-      isNeed: true,          // locks the Need behavior
-      flags: { sold: false, stolen: false },
-      imageDataUrl: null,
-      price: null,
-      moneyGroup: null
-    }
-  ],
-});
+/** Put your brainrot names here (you can keep adding later).
+    The app will let you type custom too. */
+const BRAINROT_MASTER = [
+  "Skibidi Toilet",
+  "Strawberry Elephant",
+  "Meowl",
+  "Headless Horseman",
+  "La Vacca Saturno Saturnita",
+  "Los Tralaleritos",
+  "Las Tralaleritas",
+  "Job Job Job Sahur",
+  "GOAT",
+  "Graipuss Medussi",
+  "To to to Sahur",
+  "Chicleteira Bicicleteira",
+  "Chicleteirina Bicicleteirina",
+  "La Grande Combinasion",
+  "Nuclearo Dinossauro",
+  "Money Money Puggy",
+  "Tang Tang Keletang",
+  "Ketupat Kepat",
+  "Tictac Sahur",
+  "Ketchuru and Musturu",
+  "Lavadorito Spinito",
+  "Garama and Madundung",
+  "Ventoliero Pavonero",
+  "Burguro and Fryuro",
+  "Capitano Moby",
+  "Cerberus",
+  "Dragon Cannelloni",
+  "Karkerkar Kurkur",
+  "Los Matteos",
+  "Bisonte Giuppitere",
+  "Trenostruzzo Turbo 4000",
+  "Jackorilla",
+  "Sammyni Spyderini",
+  "Torrtuginni Dragonfrutini",
+  "Dul Dul Dul",
+  "Chachechi",
+  "Blackhole Goat",
+  "Agarrini la Palini",
+  "Los Spyderinis",
+  "Fragola La La La",
+  "Extinct Tralalero",
+  "La Cucaracha",
+  "Vulturino Skeletono",
+  "Zombie Tralala",
+  "Los Tortus",
+  "Boatito Auratito",
+  "Guerriro Digitale",
+  "Yess my examine",
+  "La Karkerkar Combinasion",
+  "La Vacca Prese Presente",
+  "Reindeer Tralala",
+  "Extinct Matteo",
+  "Rocco Disco",
+  "Pumpkini Spyderini",
+  "Frankentteo",
+  "Los Trios",
+  "Karker Sahur",
+  "Las Vaquitas Saturnitas",
+  "Los Karkeritos",
+  "Santteo",
+  "Fishboard",
+  "La Vacca Jacko Linterino",
+  "Triplito Tralaleritos",
+  "Trickolino",
+  "Giftini Spyderini",
+  "Perrito Burrito",
+  "1x1x1x1",
+  "Love Love Love Sahur",
+  "Los Cucarachas",
+  "Please my Present",
+  "Cuadramat and Pakrahmatmamat",
+  "Bunnyman",
+  "Coffin Tung Tung Tung Sahur",
+  "Tung Tung Tung Sahur",
+  "Los Jobcitos",
+  "Nooo My Hotspot",
+  "Noo my examine",
+  "Telemorte",
+  "La Sahur Combinasion",
+  "List List List Sahur",
+  "Pirulitoita Bicicleteira",
+  "Pot Hotspot",
+  "25",
+  "Santa Hotspot",
+  "Horegini Boom",
+  "Quesadilla Crocodila",
+  "Bunito Bunito Spinito",
+  "Pot Pumpkin",
+  "Cupid Cupid Sahur",
+  "Naughty Naughty",
+  "Ho Ho Ho Sahur",
+  "Mi Gatito",
+  "Quesadillo Vampiro",
+  "Brunito Marsito",
+  "Cupid Hotspot",
+  "Burrito Bandito",
+  "Chill Puppy",
+  "Los Quesadillas",
+  "Noo my Candy",
+  "Arcadopus",
+  "Los Nooo My Hotspotsitos",
+  "Rang Ring Bus",
+  "Noo my Present",
+  "Guest 666",
+  "Los Chicleteiras",
+  "Los Mi Gatitos",
+  "67",
+  "Donkeyturbo Express",
+  "Los Burritos",
+  "Los 25",
+  "Mariachi Corazoni",
+  "Swag Soda",
+  "Noo my Heart",
+  "Chimnino",
+  "Los Combinasionas",
+  "Chicleteira Noelteira",
+  "Fishino Clownino",
+  "Tacorita Bicicleta",
+  "Los Sweethearts",
+  "Spinny Hammy",
+  "Las Sis",
+  "DJ Panda",
+  "Chicleteira Cupideira",
+  "Los Planitos",
+  "Los Hotspotsitos",
+  "Los Spooky Combinasionas",
+  "Los Jolly Combinasionas",
+  "Los Mobilis",
+  "Celularcini Viciosini",
+  "Los 67",
+  "Los Candies",
+  "La Extinct Grande",
+  "Los Bros",
+  "Bacuru and Egguru",
+  "La Spooky Grande",
+  "Chipso and Queso",
+  "Chillin Chili",
+  "Money Money Reindeer",
+  "Mieteteira Bicicleteira",
+  "Tuff Toucan",
+  "Tralaledon",
+  "Gobblino Uniciclino",
+  "Esok Sekolah",
+  "Los Puggies",
+  "W or L",
+  "La Jolly Grande",
+  "Los Primos",
+  "Eviledon",
+  "Los Tacoritas",
+  "Lovin Rose",
+  "La Taco Combinasion",
+  "Orcaledon",
+  "Swaggy Bros",
+  "La Romantic Grande",
+  "Tirilikalika Tirilikalako",
+  "Jolly Jolly Sahur",
+  "Rosetti Tualetti",
+  "Spaghetti Tualetti",
+  "Festive 67",
+  "Los Spaghettis",
+  "Sammyni Fattini",
+  "Ginger Gerat",
+  "La Ginger Sekolah",
+  "Love Love Bear",
+  "Spooky and Pumpky",
+  "La Food Combinasion",
+  "Fragrama and Chocrama",
+  "Signore Carapace",
+  "La Casa Boo",
+  "Los Sekolahs",
+  "La Secret Combinasion",
+  "Los Amigos",
+  "Reinito Sleighito",
+  "Ketupat Bros",
+  "Cooki and Milki",
+  "Rosey and Teddy",
+  "Popcuru and Fizzuru",
+  "Celestial Pegasus",
+  "La Supreme Combinasion",
+  "Dragon Gingerini",
+  "Hydra Dragon Cannelloni",
+  "Cocofanto Elefanto",
+  "Girafa Celestre",
+  "Tralalero Tralala",
+  "Odin Din Din Dun",
+  "Tralalita Tralala",
+  "Trenostruzzo Turbo 3000",
+  "Trippi Troppi Troppa Trippa",
+  "Ballerino Lololo",
+  "Pakrahmatmamat",
+  "Piccione Macchina",
+  "Tractoro Dinosauro",
+  "Cacasito Satalito",
+  "Aquanaut",
+  "Tartaruga Cisterna",
+  "Gattatino Nyanino",
+  "Chihuanini Taconini",
+  "Matteo",
+  "Los Crocodillitos",
+  "Tigroligre Frutonni",
+  "Money Money Man",
+  "Alessio",
+  "Tipi Topi Taco",
+  "Unclito Samito",
+  "Tukanno Bananno",
+  "Extinct Ballerina",
+  "Vampira Cappuccina",
+  "Espresso Signora",
+  "Orcalero Orcala",
+  "Jacko Jack Jack",
+  "Urubini Flamenguini",
+  "Capi Taco",
+  "Los Chihuaninis",
+  "Gattito Tacoto",
+  "Las Capuchinas",
+  "Bulbito Bandito Traktorito",
+  "Los Tungtungtungcitos",
+  "Ballerina Peppermintina",
+  "Brr es Teh Patipum",
+  "Pakrahmatmatina",
+  "Los Bombinitos",
+  "Los Orcalitos",
+  "Orcalita Orcala",
+  "Corn Corn Corn Sahur",
+  "Mummy Ambalabu",
+  "Snailenzo",
+  "Squalanana",
+  "Dug dug dug",
+  "Ginger Globo",
+  "Yeti Claus",
+  "Crabbo Limonetta",
+  "Granchiello Spiritell",
+  "Tootini Shrimpini",
+  "Los Tipi Tacos",
+  "Frio Ninja",
+  "Buho de Noelo",
+  "Piccionetta Machina",
+  "Boba Panda",
+  "Mastodontico Telepiedone",
+  "Los Gattitos",
+  "Bambu Bambu Sahur",
+  "Chrismasmamat",
+  "Anpali Babel",
+  "Luv Luv Luv",
+  "Cappuccino Clownino",
+  "Bombardini Tortinii",
+  "Brasilini Berimbini",
+  "Belula Beluga",
+  "Krupuk Pagi Pagi",
+  "Skull Skull Skull",
+  "Cocoa Assassino",
+  "Tentacolo Tecnico",
+  "Ginger Cisterna",
+  "Pandanini Frostini",
+  "Dolphini Jetskini",
+  "Pop Pop Sahur",
+  "Noo La Polizia",
+  "Karkerheart Luvkur",
+  "Frigo Camelo",
+  "Orangutini Ananassini",
+  "Rhino Toasterino",
+  "Bombardiro Crocodilo",
+  "Bombombini Gusini",
+  "Cavallo Virtuoso",
+  "Gorillo Watermelondrillo",
+  "Lerulerulerule",
+  "Te Te Te Sahur",
+  "Tracoducotulu Delapeladustuz",
+  "Cachorrito Melonito",
+  "Toiletto Focaccino",
+  "Brutto Gialutto",
+  "Spioniro Golubiro",
+  "Zibra Zubra Zibralini",
+  "Tigrilini Watermelini",
+  "Avocadorilla",
+  "Gorillo Subwoofero",
+  "Stoppo Luminino",
+  "Tob Tobi Tobi",
+  "Ganganzelli Trulala",
+  "Rhino Helicopterino",
+  "Magi Ribbitini",
+  "Jingle Jingle Sahur",
+  "Los Noobinis",
+  "Spongini Quackini",
+  "Carloo",
+  "Carrotini Brainini",
+  "Centrucci Nuclucci",
+  "Jacko Spaventosa",
+  "Bananito Bandito",
+  "Tree Tree Tree Sahur",
+  "Chimpanzini Bananini",
+  "Ballerina Cappuccina",
+  "Chef Crabracadabra",
+  "Lionel Cactuseli",
+  "Glorbo Fruttodrillo",
+  "Quivioli Ameleonni",
+  "Blueberrinni Octopusini",
+  "Pipi Potato",
+  "Strawberrelli Flamingelli",
+  "Pandaccini Bananini",
+  "Sigma Boy",
+  "Clickerino Crabo",
+  "Caramello Filtrello",
+  "Cocosini Mama",
+  "Quackula",
+  "Pi Pi Watermelon",
+  "Chocco Bunny",
+  "Puffaball",
+  "Sigma Girl",
+  "Sealo Regalo",
+  "Buho de Fuego",
+  "Cappuccino Assassino",
+  "Brr Brr Patapim",
+  "Avocadini Antilopini",
+  "Trulimero Trulicina",
+  "Bambini Crostini",
+  "Bananita Dolphinita",
+  "Perochello Lemonchello",
+  "Brri Brri Bicus Dicus Bombicus",
+  "Avocadini Guffo",
+  "Salamino Penguino",
+  "Wombo Rollo",
+  "Bandito Axolito",
+  "Malame Amarele",
+  "Ti Ti Ti Sahur",
+  "Mangolini Parrocini",
+  "Frogato Pirato",
+  "Doi Doi Do",
+  "Penguin Tree",
+  "Penguino Cocosino",
+  "Mummio Rappitto",
+  "Trippi Troppi",
+  "Gangster Footera",
+  "Bandito Bobritto",
+  "Boneca Ambalabu",
+  "Cacto Hipopotamo",
+  "Ta Ta Ta Ta Sahur",
+  "Tric Trac Baraboom",
+  "Cupcake Koala",
+  "Frogo Elfo",
+  "Pipi Avocado",
+  "Pinealotto Fruttarino",
+  "Pipi Corni",
+  "Tartaragno",
+  "Racconi Jandelini",
+  "Noobini Santanini",
+  "Pipi Kiwi",
+  "Svinina Bombardino",
+  "Furiflura",
+  "Tim Cheese",
+  "Lirili Larila",
+  "Noobini Pizzanini"
+];
+
+function seed(){
+  return {
+    activeProfileId: "rafael",
+    profiles: [
+      {
+        id: "rafael",
+        name: "RafaelSales",
+        email: "@rsaldana@crossdock.mx",
+        rating: 5,
+        shops: [
+          { name: "BuyBlox", url: "#" },
+          { name: "Eldorado", url: "#" },
+          { name: "Ebay", url: "#" },
+        ],
+        topProductIds: [],
+        reviews: [],
+      }
+    ],
+    brainrots: [
+      // Your required Need item:
+      {
+        id: "nuclearo",
+        name: "Nuclearo Dinossauro",
+        baseRate: 150_000_000,
+        mutation: "Rainbow",
+        trait: "Doesn't matter",
+        amount: 0,
+        isNeed: true,
+        flags: { sold:false, stolen:false },
+        imageDataUrl: null,
+        price: null,
+        moneyGroup: null
+      }
+    ],
+  };
+}
 
 function loadState(){
   try{
     const raw = localStorage.getItem(LS_KEY);
     if(!raw) return seed();
     const parsed = JSON.parse(raw);
-    // basic sanity
     if(!parsed || !Array.isArray(parsed.brainrots)) return seed();
     return parsed;
   }catch{
     return seed();
   }
 }
-
-function saveState(){
-  localStorage.setItem(LS_KEY, JSON.stringify(state));
-}
-
+function saveState(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
 let state = loadState();
 
 // Back stack
@@ -270,21 +435,16 @@ function go(page, params = {}){
   current = { page, params };
   render();
 }
-
 function back(){
   const prev = navStack.pop();
-  if(prev){
-    current = prev;
-    render();
-  }else{
-    current = { page: PAGES.HOME, params: {} };
-    render();
-  }
+  current = prev || { page: PAGES.HOME, params: {} };
+  render();
 }
 
 function profile(){
   return state.profiles.find(p => p.id === state.activeProfileId) || state.profiles[0];
 }
+function brainrotById(id){ return state.brainrots.find(b => b.id === id); }
 
 function money(n){
   if(!Number.isFinite(n)) return "";
@@ -314,11 +474,28 @@ function el(tag, attrs = {}, html = ""){
   return e;
 }
 
-function brainrotById(id){
-  return state.brainrots.find(b => b.id === id);
+function idNew(prefix="b_"){
+  return prefix + Math.random().toString(16).slice(2) + "_" + Date.now().toString(16);
 }
 
-/* ---------- RENDERERS ---------- */
+function readAsDataURL(file){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = rej;
+    r.readAsText(file);
+  });
+}
+function readImgAsDataURL(file){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+/* ---------- RENDER ---------- */
 
 function render(){
   APP.innerHTML = "";
@@ -329,10 +506,11 @@ function render(){
   if(current.page === PAGES.NEW_PRODUCT) renderNewProduct();
 }
 
+/* ---------- HOME ---------- */
+
 function renderHome(){
   const top = el("div", { class:"topbar" });
 
-  // left sellers (filter placeholder)
   const sellersPill = el("div", { class:"pill" });
   sellersPill.innerHTML = `
     <span style="text-decoration:underline;text-underline-offset:5px;">Sellers</span>
@@ -343,7 +521,6 @@ function renderHome(){
   `;
   top.appendChild(sellersPill);
 
-  // right profile selector
   const profPill = el("div", { class:"pill" });
   const p = profile();
   profPill.innerHTML = `
@@ -353,7 +530,6 @@ function renderHome(){
     <span style="font-weight:1000;">▼</span>
   `;
   profPill.addEventListener("click", (e) => {
-    // clicking the pill (not the dropdown itself) goes to profile page
     if(e.target && e.target.tagName !== "SELECT"){
       go(PAGES.PROFILE);
     }
@@ -364,20 +540,12 @@ function renderHome(){
   APP.appendChild(el("div", { class:"title" }, "Brainrots.."));
 
   const board = el("div", { class:"board" });
-
-  const needCol = makeColumn("Need/Dont Have", "need");
-  const haveCol = makeColumn("Have", "have");
-  const boughtCol = makeColumn("Bought", "bought");
-  const soldCol = makeColumn("Sold", "sold");
-
-  board.appendChild(needCol);
-  board.appendChild(haveCol);
-  board.appendChild(boughtCol);
-  board.appendChild(soldCol);
-
+  board.appendChild(makeColumn("Need/Dont Have", "need"));
+  board.appendChild(makeColumn("Have", "have"));
+  board.appendChild(makeColumn("Bought", "bought"));
+  board.appendChild(makeColumn("Sold", "sold"));
   APP.appendChild(board);
 
-  // Apply profile selection changes
   const profSelect = document.getElementById("profSelect");
   profSelect.addEventListener("change", () => {
     state.activeProfileId = profSelect.value;
@@ -385,10 +553,10 @@ function renderHome(){
     render();
   });
 
-  // Fill lists
+  // Lists
   const need = state.brainrots.filter(b => b.isNeed);
-  const have = state.brainrots.filter(b => !b.isNeed && b.amount > 0);
-  const bought = state.brainrots.filter(b => !b.isNeed && b.price != null); // simple: has price = bought
+  const have = state.brainrots.filter(b => !b.isNeed && b.amount > 0 && !b.flags?.stolen);
+  const bought = state.brainrots.filter(b => !b.isNeed && b.price != null);
   const sold = state.brainrots.filter(b => !b.isNeed && (b.flags?.sold || b.flags?.stolen));
 
   fillList("need", need);
@@ -411,7 +579,7 @@ function fillList(key, items){
   const list = document.getElementById(`list-${key}`);
   list.innerHTML = "";
   items.forEach(b => {
-    const it = el("div", { class:"item" }, `( ${b.name} )`.replace("( ", "(").replace(" )", ")"));
+    const it = el("div", { class:"item" }, `( ${b.name} )`);
     it.addEventListener("click", () => go(PAGES.DETAIL, { id: b.id }));
     list.appendChild(it);
   });
@@ -437,54 +605,49 @@ function fillSold(key, items){
   });
 }
 
-/* ---------- DETAIL PAGE ---------- */
+/* ---------- DETAIL ---------- */
 
 function renderDetail(id){
   const b = brainrotById(id);
   if(!b){ back(); return; }
 
   const topRow = el("div", { class:"backRow" });
-
-  // Need brainrots use X to go back to Home (as you requested earlier)
-  const backButton = el("button", { class: b.isNeed ? "xBtn" : "xBtn", onclick: () => back() }, "X");
-  topRow.appendChild(backButton);
-
+  topRow.appendChild(el("button", { class:"xBtn", onclick: () => back() }, "X"));
   APP.appendChild(topRow);
 
-  const card = el("div", { class:"page" });
+  const page = el("div", { class:"page" });
   const detail = el("div", { class:"detailCard" });
 
   const grid = el("div", { class:"detailGrid" });
 
-  // left side: flags + qty
   const left = el("div", {});
-  const tagRow = el("div", { class:"tagRow" });
+  const right = el("div", {});
 
-  // Need: ONLY "Gotten" button. No Sold/Stolen.
   if(b.isNeed){
-    const info = el("div", { class:"infoLines" }, `
+    // Need: only "Gotten"
+    left.appendChild(el("div", { class:"infoLines" }, `
       <div>(Brainrot Name) ${b.name}</div>
       <div>$/s: ${money(b.baseRate)}</div>
       <div>Mutation: ${b.mutation}</div>
       <div>Trait: ${b.trait}</div>
-    `);
+    `));
+
+    left.appendChild(el("div", { style:"height:16px" }));
 
     const gotten = el("button", { class:"gottenBtn" }, "Gotten");
     gotten.addEventListener("click", () => {
-      // convert from Need → Have
       b.isNeed = false;
-      b.amount = 1; // simple default
+      b.amount = 1;
       b.flags = { sold:false, stolen:false };
       saveState();
-      // go back where you came from
       back();
     });
 
-    left.appendChild(info);
-    left.appendChild(el("div", { style:"height:16px" }));
     left.appendChild(gotten);
   } else {
-    // Non-Need: allow Sold/Stolen + Qty
+    // Not Need: sold/stolen + qty
+    const tagRow = el("div", { class:"tagRow" });
+
     const soldBtn = el("button", { class:"tagBtn sold" }, "Sold");
     soldBtn.addEventListener("click", () => {
       b.flags.sold = !b.flags.sold;
@@ -498,7 +661,7 @@ function renderDetail(id){
       b.flags.stolen = !b.flags.stolen;
       if(b.flags.stolen){
         b.flags.sold = false;
-        b.amount = 0; // stolen forces amount 0 (your rule)
+        b.amount = 0; // stolen forces 0
       }
       saveState();
       render();
@@ -506,35 +669,30 @@ function renderDetail(id){
 
     tagRow.appendChild(soldBtn);
     tagRow.appendChild(stolenBtn);
+    left.appendChild(tagRow);
+
+    left.appendChild(el("div", { style:"height:16px" }));
 
     const qty = el("div", { class:"qtyBox" });
     const up = el("button", {}, "▲");
-    const down = el("button", {}, "▼");
     const mid = el("div", { class:"qty" }, `${b.amount}`);
+    const down = el("button", {}, "▼");
 
     up.addEventListener("click", () => { b.amount += 1; saveState(); render(); });
-    down.addEventListener("click", () => { b.amount = Math.max(0, b.amount - 1); saveState(); render(); });
+    down.addEventListener("click", () => { b.amount = Math.max(0, b.amount-1); saveState(); render(); });
 
-    qty.appendChild(up);
-    qty.appendChild(mid);
-    qty.appendChild(down);
-
-    left.appendChild(tagRow);
-    left.appendChild(el("div", { style:"height:16px" }));
+    qty.appendChild(up); qty.appendChild(mid); qty.appendChild(down);
     left.appendChild(qty);
-    left.appendChild(el("div", { style:"height:16px" }));
 
-    const info = el("div", { class:"infoLines" }, `
+    left.appendChild(el("div", { style:"height:16px" }));
+    left.appendChild(el("div", { class:"infoLines" }, `
       <div>(Brainrot Name) ${b.name}</div>
-      <div>$/s: ${money(b.baseRate)}</div>
+      <div>$/s: ${money(b.baseRate || 0)}</div>
       <div>Cost: ${b.price != null ? `$${b.price}` : "(Cost)"}</div>
       <div>Mutation: ${b.mutation || "(none)"}</div>
-    `);
-    left.appendChild(info);
+    `));
   }
 
-  // right side: picture + insert
-  const right = el("div", {});
   const pic = el("div", { class:"picBox" });
   const picArea = el("div", { class:"pic" }, b.imageDataUrl ? "" : "Picture Of Brainrot");
   if(b.imageDataUrl){
@@ -550,8 +708,7 @@ function renderDetail(id){
   fileInput.addEventListener("change", async () => {
     const file = fileInput.files?.[0];
     if(!file) return;
-    const dataUrl = await readAsDataURL(file);
-    b.imageDataUrl = dataUrl;
+    b.imageDataUrl = await readImgAsDataURL(file);
     saveState();
     render();
   });
@@ -565,20 +722,11 @@ function renderDetail(id){
   grid.appendChild(right);
 
   detail.appendChild(grid);
-  card.appendChild(detail);
-  APP.appendChild(card);
+  page.appendChild(detail);
+  APP.appendChild(page);
 }
 
-function readAsDataURL(file){
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result);
-    r.onerror = rej;
-    r.readAsDataURL(file);
-  });
-}
-
-/* ---------- PROFILE PAGE ---------- */
+/* ---------- PROFILE ---------- */
 
 function renderProfile(){
   const page = el("div", { class:"page" });
@@ -589,12 +737,8 @@ function renderProfile(){
 
   const top = el("div", { class:"profileTop" });
 
-  // avatar
-  const av = el("div", { class:"avatarBig" });
-  av.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:1000;">(photo)</div>`;
-  top.appendChild(av);
+  top.appendChild(el("div", { class:"avatarBig" }, "(photo)"));
 
-  // header pill
   const p = profile();
   const header = el("div", { class:"headerPill" });
   header.innerHTML = `
@@ -604,7 +748,6 @@ function renderProfile(){
   `;
   top.appendChild(header);
 
-  // shops
   const shops = el("div", { class:"shopBox" });
   shops.innerHTML = `
     <h3>Shops Used</h3>
@@ -614,7 +757,6 @@ function renderProfile(){
 
   page.appendChild(top);
 
-  // sections row
   const row = el("div", { class:"sectionRow" });
 
   // Top Products
@@ -623,25 +765,20 @@ function renderProfile(){
 
   const prodPanel = el("div", { class:"productPanel" });
 
-  // show first top product card if exists, else show empty style w/ Add
-  const firstId = p.topProductIds[0];
-  if(firstId){
-    const b = brainrotById(firstId);
-    if(b){
-      const pc = productCard(b);
-      prodPanel.appendChild(pc);
-    }
-  }else{
+  if(p.topProductIds.length === 0){
     const empty = el("div", { style:"display:flex;align-items:center;gap:18px;flex:1;justify-content:center;" });
     empty.innerHTML = `
       <div style="font-weight:1000;font-size:36px;text-decoration:underline;text-underline-offset:6px;">No Others...</div>
       <div class="sad"><div class="mouth"></div></div>
     `;
     prodPanel.appendChild(empty);
+  } else {
+    const first = brainrotById(p.topProductIds[0]);
+    if(first) prodPanel.appendChild(productCard(first));
   }
 
   const addBtn = el("button", { class:"addGreen" }, "Add...");
-  addBtn.addEventListener("click", () => go(PAGES.NEW_PRODUCT));
+  addBtn.addEventListener("click", () => go(PAGES.NEW_PRODUCT, { linkToTop:true }));
   prodPanel.appendChild(addBtn);
 
   leftPanel.appendChild(prodPanel);
@@ -650,7 +787,6 @@ function renderProfile(){
   // Reviews
   const rightPanel = el("div", {});
   rightPanel.appendChild(el("div", { class:"sectionTitle" }, "Reviews"));
-
   const reviewsCard = el("div", { class:"card", style:"min-height:260px;display:flex;flex-direction:column;justify-content:center;align-items:center;" });
   reviewsCard.innerHTML = `
     <div style="font-weight:1000;font-size:34px;text-decoration:underline;text-underline-offset:6px;">None...</div>
@@ -659,81 +795,70 @@ function renderProfile(){
   `;
   rightPanel.appendChild(reviewsCard);
 
-  // Delete account
   const del = el("button", { class:"deleteRed" }, "Delete Account");
-  del.addEventListener("click", () => {
-    alert("Delete Account is wired, but for safety this demo does NOT actually delete RafaelSales.");
-  });
+  del.addEventListener("click", () => alert("Demo safety: Delete is disabled."));
   rightPanel.appendChild(del);
 
   row.appendChild(rightPanel);
-
   page.appendChild(row);
-
   APP.appendChild(page);
 
   document.getElementById("toProductsLink").addEventListener("click", () => go(PAGES.PRODUCTS));
 }
 
-/* ---------- TO PRODUCTS PAGE ---------- */
+/* ---------- TO PRODUCTS ---------- */
 
 function renderProducts(){
   const page = el("div", { class:"page" });
 
-  // X to go back to profile
   const topRow = el("div", { class:"backRow", style:"justify-content:flex-end" });
   topRow.appendChild(el("button", { class:"xBtn", onclick: () => back() }, "X"));
   page.appendChild(topRow);
 
-  // show product cards linked to profile, then "No more..." + Add...
   const p = profile();
-
   const row = el("div", { style:"display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;" });
 
-  // left: existing products cards (top products list for now)
   p.topProductIds.forEach(id => {
     const b = brainrotById(id);
     if(b) row.appendChild(productCard(b));
   });
 
-  // center: No more... + Add...
   const empty = el("div", { style:"flex:1;min-width:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding-top:40px;" });
   empty.innerHTML = `<div style="font-size:64px;font-weight:1000;">No more...</div>`;
   const add = el("button", { class:"addGreen", style:"font-size:54px;padding:18px 34px;" }, "Add...");
-  add.addEventListener("click", () => go(PAGES.NEW_PRODUCT));
+  add.addEventListener("click", () => go(PAGES.NEW_PRODUCT, { linkToTop:true }));
   empty.appendChild(add);
 
   row.appendChild(empty);
-
   page.appendChild(row);
   APP.appendChild(page);
 }
 
 function productCard(b){
   const pc = el("div", { class:"productCard" });
-  const img = el("div", { class:"img" }, b.imageDataUrl ? "" : "");
+
+  const img = el("div", { class:"img" }, b.imageDataUrl ? "" : "(image)");
   if(b.imageDataUrl){
+    img.textContent = "";
     img.style.backgroundImage = `url("${b.imageDataUrl}")`;
     img.style.backgroundSize = "cover";
     img.style.backgroundPosition = "center";
-  }else{
-    img.textContent = "(image)";
   }
 
   const txt = el("div", { class:"txt" });
   txt.innerHTML = `
     <div class="n">${b.name}</div>
-    <div class="q">${b.amount > 0 ? `${b.amount} Quantity` : `Unlimited Quantity`}</div>
+    <div class="q">${b.amount > 0 ? `${b.amount} Quantity` : `Infinite Quantity`}</div>
     <div class="p">${b.price != null ? `$${b.price}` : `$2.5`}</div>
   `;
+
   pc.appendChild(img);
   pc.appendChild(txt);
-
   pc.addEventListener("click", () => go(PAGES.DETAIL, { id: b.id }));
   return pc;
 }
 
-/* ---------- NEW PRODUCT PAGE ---------- */
+/* ---------- NEW PRODUCT ---------- */
 
 function renderNewProduct(){
   const page = el("div", { class:"page" });
@@ -743,31 +868,25 @@ function renderNewProduct(){
   page.appendChild(backRow);
 
   const card = el("div", { class:"card" });
-  card.style.borderRadius = "34px";
-
-  const header = el("div", { class:"formTitle" }, "New Product");
-  card.appendChild(header);
+  card.appendChild(el("div", { class:"formTitle" }, "New Product"));
 
   const grid = el("div", { class:"formGrid" });
 
-  // Left: qty + yes/no
-  const left = el("div", {});
-  const qty = el("div", { class:"qtyBox" });
+  // LEFT (qty + yes/no)
   let qtyVal = 1;
+  let yesNo = true;
 
+  const left = el("div", { class:"fieldBlock" });
+  const qty = el("div", { class:"qtyBox" });
   const up = el("button", {}, "▲");
   const mid = el("div", { class:"qty" }, `${qtyVal}`);
   const down = el("button", {}, "▼");
   up.addEventListener("click", () => { qtyVal += 1; mid.textContent = `${qtyVal}`; });
   down.addEventListener("click", () => { qtyVal = Math.max(0, qtyVal-1); mid.textContent = `${qtyVal}`; });
-
   qty.appendChild(up); qty.appendChild(mid); qty.appendChild(down);
   left.appendChild(qty);
-  left.appendChild(el("div", { style:"font-weight:900;text-align:center;margin-top:8px;color:#000;" }, "Quantity"));
+  left.appendChild(el("div", { class:"smallHelp" }, "Quantity"));
 
-  left.appendChild(el("div", { style:"height:18px" }));
-
-  let yesNo = true;
   const yn = el("div", { class:"yesNo" });
   const yes = el("button", {}, "Yes");
   const no = el("button", {}, "No");
@@ -781,42 +900,46 @@ function renderNewProduct(){
   yn.appendChild(yes); yn.appendChild(no);
   left.appendChild(yn);
 
-  // Middle: selects
-  const midCol = el("div", { style:"display:flex;flex-direction:column;gap:16px;" });
+  // MIDDLE (brainrot picker + group + mutation)
+  const midCol = el("div", { class:"fieldBlock" });
 
-  const namePill = el("div", { class:"selectPill" });
-  namePill.innerHTML = `
-    <span>Brainrot Name</span>
-    <select id="npName">
-      <option value="Pot Hotspot">Pot Hotspot</option>
-      <option value="Nuclearo Dinossauro">Nuclearo Dinossauro</option>
-      <option value="Custom">Custom</option>
-    </select>
+  // Brainrot picker: datalist = you can choose OR type
+  const nameLabel = el("div", { class:"label" }, "Brainrot Name");
+  const nameInputWrap = el("div", { class:"inputPill" });
+  nameInputWrap.innerHTML = `
+    <input id="brName" list="brainrotList" placeholder="Choose or type…" />
+    <datalist id="brainrotList">
+      ${BRAINROT_MASTER.map(n => `<option value="${n}"></option>`).join("")}
+    </datalist>
   `;
-  const moneyGroup = el("div", { class:"selectPill" });
-  moneyGroup.innerHTML = `
-    <span>Money Group</span>
-    <select id="npGroup">
+
+  const groupLabel = el("div", { class:"label" }, "Money Group");
+  const groupPill = el("div", { class:"selectPill" });
+  groupPill.innerHTML = `
+    <select id="brGroup">
       <option value="None">None</option>
       <option value="Money Group">Money Group</option>
     </select>
   `;
 
-  const mutation = el("div", { class:"selectPill" });
-  mutation.innerHTML = `
-    <span>Mutation</span>
-    <select id="npMut">
+  const mutLabel = el("div", { class:"label" }, "Mutation");
+  const mutPill = el("div", { class:"selectPill" });
+  mutPill.innerHTML = `
+    <select id="brMut">
       <option value="None">None</option>
       <option value="Rainbow">Rainbow</option>
     </select>
   `;
 
-  midCol.appendChild(namePill);
-  midCol.appendChild(moneyGroup);
-  midCol.appendChild(mutation);
+  midCol.appendChild(nameLabel);
+  midCol.appendChild(nameInputWrap);
+  midCol.appendChild(groupLabel);
+  midCol.appendChild(groupPill);
+  midCol.appendChild(mutLabel);
+  midCol.appendChild(mutPill);
 
-  // Right: image + price
-  const right = el("div", { style:"display:flex;flex-direction:column;gap:18px;align-items:flex-end;" });
+  // RIGHT (image + price)
+  const right = el("div", { class:"fieldBlock" });
 
   const pic = el("div", { class:"picBox" });
   const picArea = el("div", { class:"pic" }, "Picture of Brainrot");
@@ -828,7 +951,7 @@ function renderNewProduct(){
   fileInput.addEventListener("change", async () => {
     const f = fileInput.files?.[0];
     if(!f) return;
-    imgData = await readAsDataURL(f);
+    imgData = await readImgAsDataURL(f);
     picArea.textContent = "";
     picArea.style.backgroundImage = `url("${imgData}")`;
     picArea.style.backgroundSize = "cover";
@@ -840,35 +963,31 @@ function renderNewProduct(){
   right.appendChild(pic);
   right.appendChild(fileInput);
 
-  right.appendChild(el("div", { style:"color:#000;font-weight:1000;text-align:right;margin-top:4px;" }, "Price"));
-  const pricePill = el("div", { class:"inputPill", style:"width:260px;" });
-  pricePill.innerHTML = `<input id="npPrice" type="number" placeholder="(Typebox)" min="0" step="0.01" />`;
+  right.appendChild(el("div", { class:"label" }, "Price"));
+  const pricePill = el("div", { class:"inputPill" });
+  pricePill.innerHTML = `<input id="brPrice" type="number" placeholder="(Typebox)" min="0" step="0.01" />`;
   right.appendChild(pricePill);
 
-  // Assemble
+  // build form
   grid.appendChild(left);
   grid.appendChild(midCol);
   grid.appendChild(right);
-
   card.appendChild(grid);
 
-  // Create on back? (simple + safe): add a button implicitly by tapping back later is confusing.
-  // So we add a simple "Create" button under the form (still matches your simple UX).
-  const create = el("button", { class:"addGreen", style:"margin-top:18px;" }, "Create");
+  const create = el("button", { class:"addGreen createBtn" }, "Create");
   create.addEventListener("click", () => {
-    const nameSel = document.getElementById("npName").value;
-    const groupSel = document.getElementById("npGroup").value;
-    const mutSel = document.getElementById("npMut").value;
-    const priceVal = Number(document.getElementById("npPrice").value);
+    const name = document.getElementById("brName").value.trim();
+    if(!name){ alert("Pick or type a brainrot name."); return; }
 
-    const newId = "b_" + Math.random().toString(16).slice(2);
+    const groupSel = document.getElementById("brGroup").value;
+    const mutSel = document.getElementById("brMut").value;
+    const priceVal = Number(document.getElementById("brPrice").value);
 
-    const baseRate = nameSel === "Nuclearo Dinossauro" ? 150_000_000 : 2_500_000;
-
-    const brainrot = {
-      id: newId,
-      name: nameSel === "Custom" ? "Custom Brainrot" : nameSel,
-      baseRate,
+    // Create new brainrot entry (non-Need)
+    const b = {
+      id: idNew(),
+      name,
+      baseRate: name === "Nuclearo Dinossauro" ? 150_000_000 : 0, // you can fill later
       mutation: mutSel === "None" ? null : mutSel,
       trait: "Doesn't matter",
       amount: qtyVal,
@@ -879,21 +998,20 @@ function renderNewProduct(){
       moneyGroup: groupSel === "None" ? null : groupSel
     };
 
-    state.brainrots.push(brainrot);
+    state.brainrots.push(b);
 
-    // link it to RafaelSales top products
+    // link to RafaelSales top products automatically
     const p = profile();
-    p.topProductIds.unshift(newId);
+    p.topProductIds.unshift(b.id);
 
     saveState();
-    back(); // returns to where you came from (your rule)
+    back(); // return to previous page (your rule)
   });
 
   card.appendChild(create);
-
   page.appendChild(card);
   APP.appendChild(page);
 }
 
-/* ---------- init ---------- */
+/* ---------- INIT ---------- */
 render();
